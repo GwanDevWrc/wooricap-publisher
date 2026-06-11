@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>모바일 신분증 인증 - 우리캐피탈</title>
+  <link rel="stylesheet" href="../assets/css/jb-common.css">
+  <link rel="stylesheet" href="../assets/css/jb-style.css">
+  <style>
+    /* 시안 전용 보강 스타일 */
+
+    /* 상단 sub-header (뒤로가기 + 타이틀 + 진행률 라인) */
+    .auth-header{position:relative;padding:1.4rem 2rem 0;background:var(--primaryWhite);}
+    .auth-header .header-row{display:flex;align-items:center;justify-content:center;position:relative;height:4.4rem;}
+    .auth-header .btn-back{position:absolute;left:0;top:50%;transform:translateY(-50%);width:4.4rem;height:4.4rem;background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+    .auth-header .btn-back::before{content:'';width:1rem;height:1rem;border-left:2px solid var(--primaryBlack);border-bottom:2px solid var(--primaryBlack);transform:rotate(45deg);margin-left:.4rem;}
+    .auth-header .header-title{font-size:1.6rem;font-weight:600;color:var(--primaryBlack);}
+    .auth-header .progress-bar{position:relative;height:.3rem;background:#E6EAF0;margin-top:.6rem;border-radius:.2rem;overflow:hidden;}
+    .auth-header .progress-bar::after{content:'';position:absolute;left:0;top:0;height:100%;width:60%;background:var(--primaryBlue);border-radius:.2rem;}
+
+    /* 단계 표시 */
+    .step-info{font-size:1.3rem;font-weight:500;color:var(--subTxt);padding:2rem 2rem .8rem;letter-spacing:-0.02em;}
+    .step-info .step-num{color:var(--primaryBlue);font-weight:600;}
+    .step-info .step-current{color:var(--primaryBlue);font-weight:600;}
+    .step-info .step-divider{margin:0 .4rem;color:#C5CAD2;}
+
+    /* 화면 본문 */
+    .auth-contents{padding:0 2rem 12rem;}
+    .auth-contents .l-tit{font-size:2.2rem;font-weight:700;line-height:3rem;color:var(--primaryBlack);letter-spacing:-0.02em;margin-top:.6rem;}
+    .auth-contents .l-desc{font-size:1.4rem;font-weight:400;color:var(--subTxt);line-height:2.2rem;margin-top:1rem;}
+
+    /* Lottie 컨테이너 */
+    .lottie-frame{margin-top:3.2rem;border-radius:2rem;overflow:hidden;}
+    .lottie-frame .lottie-stage{width:100%;aspect-ratio:400 / 280;display:block;}
+
+    /* 동의 행 (체크박스 + 자세히 보기) */
+    .agree-row{margin-top:2.4rem;display:flex;align-items:flex-start;gap:1.2rem;padding:1.4rem 1.6rem;border:1px solid var(--borderColor);border-radius:1rem;background:var(--primaryWhite);}
+    .agree-row .chk{position:relative;flex:0 0 2rem;width:2rem;height:2rem;display:inline-block;}
+    .agree-row .chk input{appearance:none;-webkit-appearance:none;width:2rem;height:2rem;margin:0;border:1.5px solid #B9C2CC;border-radius:.5rem;background:var(--primaryWhite);cursor:pointer;}
+    .agree-row .chk input:checked{border-color:var(--primaryBlue);background:var(--primaryBlue);}
+    .agree-row .chk input:checked::after{content:'';position:absolute;left:.5rem;top:.2rem;width:.6rem;height:1.1rem;border:solid var(--primaryWhite);border-width:0 .25rem .25rem 0;transform:rotate(45deg);}
+    .agree-row .agree-txt{flex:1;font-size:1.3rem;font-weight:500;color:var(--primaryBlack);line-height:1.9rem;letter-spacing:-0.02em;}
+    .agree-row .btn-arrow{flex:0 0 1.6rem;width:1.6rem;height:1.6rem;background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:.1rem;}
+    .agree-row .btn-arrow::before{content:'';width:.8rem;height:.8rem;border-top:1.6px solid var(--subTxt);border-right:1.6px solid var(--subTxt);transform:rotate(45deg);margin-right:.3rem;}
+
+    /* 하단 고정 버튼 */
+    .btn-fixed-bottom{position:fixed;left:0;right:0;bottom:0;padding:1.2rem 2rem 2.4rem;background:var(--primaryWhite);}
+    .btn-fixed-bottom .btn-lg{width:100%;}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <header class="auth-header">
+      <div class="header-row">
+        <button type="button" class="btn-back" aria-label="뒤로가기"></button>
+        <h1 class="header-title">JB우리캐피탈 다이렉트 론</h1>
+      </div>
+      <div class="progress-bar" aria-hidden="true"></div>
+    </header>
+
+    <main id="main">
+      <p class="step-info">
+        <span class="step-num">3/5</span>
+        <span>&nbsp;고객정보 입력</span>
+        <span class="step-divider">&gt;</span>
+        <span class="step-current">신분증 인증</span>
+      </p>
+
+      <div class="auth-contents">
+        <h2 class="l-tit">모바일 신분증으로<br>인증을 진행해주세요</h2>
+        <p class="l-desc">모바일 신분증을 실행하여 인증을 진행해 주세요.</p>
+
+        <!-- Lottie 애니메이션 영역 -->
+        <div class="lottie-frame">
+          <div id="id-scan-lottie" class="lottie-stage" role="img" aria-label="신분증 스캔 애니메이션"></div>
+        </div>
+
+        <!-- 동의 영역 -->
+        <div class="agree-row">
+          <label class="chk">
+            <input type="checkbox" id="agree-id" checked>
+          </label>
+          <span class="agree-txt">신분증진위확인용 개인정보 수집·이용·제공 및 고유식별정보 처리 동의 (필수)</span>
+          <button type="button" class="btn-arrow" aria-label="자세히 보기"></button>
+        </div>
+      </div>
+
+    </main>
+
+    <div class="btn-fixed-bottom">
+      <button type="button" class="btn-lg btn-primary">모바일 신분증 실행하기</button>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+  <script>
+    if (typeof lottie !== 'undefined') {
+      lottie.loadAnimation({
+        container: document.getElementById('id-scan-lottie'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../assets/lottie/id-scan-animation.json'
+      });
+    }
+  </script>
+</body>
+</html>

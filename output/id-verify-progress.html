@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>모바일 신분증 인증 진행 중 | JB우리캐피탈</title>
+
+  <!-- 우리캐피탈 디자인 시스템 (운영 사이트 자원 참조) -->
+  <link rel="stylesheet" href="https://www.wooricap.com/assets/css/jb-common.css">
+  <link rel="stylesheet" href="https://www.wooricap.com/assets/css/jb-style.css">
+
+  <!-- Lottie 런타임 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+
+  <style>
+    /* ── 모바일 단일 컬럼 보정 (데스크톱 min-width 무력화) ───────────── */
+    html, body { background:#fff; }
+    #main { min-width:0 !important; padding-top:0 !important; }
+    .id-app{
+      max-width:46rem; margin:0 auto; min-height:100vh;
+      display:flex; flex-direction:column; background:#fff;
+    }
+    .id-body{ flex:1; padding:2.4rem 2.4rem 2rem; }
+
+    /* ── 제목 / 설명 (인증 완료 단계 톤) ────────────────────────────── */
+    .id-tit{ font-weight:800; letter-spacing:-.035em; color:#1b2733; }
+    .id-desc{ margin-top:1rem; font-size:1.4rem; line-height:2rem; color:#8b95a1; letter-spacing:-.02em; }
+    .id-desc .em{ color:#3a444f; font-weight:600; }
+
+    /* ── 신분증 스캔 일러스트 프레임 ────────────────────────────────── */
+    .id-scan-frame{
+      position:relative; margin-top:2.8rem; height:32rem; border-radius:2rem;
+      background:#f7f9fc; border:1px solid #eef1f5; overflow:hidden;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .id-scan-frame::before{ /* 점선 메쉬 배경 */
+      content:''; position:absolute; inset:0; opacity:.55;
+      background-image:radial-gradient(#cdd8e6 1.4px, transparent 1.4px);
+      background-size:16px 16px;
+    }
+    .id-scan-frame .corner{ position:absolute; width:2.4rem; height:2.4rem; border:2px solid #a9c2ef; }
+    .id-scan-frame .corner.tl{ top:2.4rem; left:2.4rem; border-right:0; border-bottom:0; border-top-left-radius:.4rem; }
+    .id-scan-frame .corner.tr{ top:2.4rem; right:2.4rem; border-left:0; border-bottom:0; border-top-right-radius:.4rem; }
+    .id-scan-frame .corner.bl{ bottom:2.4rem; left:2.4rem; border-right:0; border-top:0; border-bottom-left-radius:.4rem; }
+    .id-scan-frame .corner.br{ bottom:2.4rem; right:2.4rem; border-left:0; border-top:0; border-bottom-right-radius:.4rem; }
+    .id-scan-frame .lottie{ position:relative; width:33rem; height:27rem; z-index:2; }
+
+    /* ── ★ 1. 인증 확인 대기 뱃지 (HTML) ───────────────────────────── */
+    .status-pill{
+      position:absolute; top:3.2rem; left:50%; transform:translateX(-50%);
+      z-index:5;
+      display:inline-flex; align-items:center; gap:.6rem;
+      padding:.7rem 1.4rem; border-radius:10rem;
+      background:#FAB050;
+      color:#FFFFFF; font-size:1.3rem; font-weight:700; letter-spacing:-.02em;
+      box-shadow:0 .4rem 1.2rem rgba(250,176,80,.32);
+    }
+    .status-pill::before{
+      content:''; width:.7rem; height:.7rem; border-radius:50%;
+      background:#FFFFFF;
+      animation:pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%, 100%{ opacity:1; transform:scale(1); }
+      50%{ opacity:.55; transform:scale(1.4); }
+    }
+
+    /* ── ★ 2. 헬퍼 행 (앱이 안 켜지거나 문제가 있나요? | 다시 인증하기) ─ */
+    .help-row{
+      margin-top:1.4rem;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:1.2rem; padding:.4rem .2rem;
+    }
+    .help-row .help-txt{
+      font-size:1.3rem; font-weight:500; color:#8b95a1; letter-spacing:-.02em;
+    }
+    .help-row .help-link{
+      flex-shrink:0;
+      font-size:1.3rem; font-weight:700; color:#3a444f; letter-spacing:-.02em;
+      text-decoration:underline; text-underline-offset:.3rem;
+      cursor:pointer; background:none; border:0; padding:.4rem 0; font-family:inherit;
+    }
+    .help-row .help-link:hover{ color:var(--primaryBlue); }
+
+    /* ── 하단 고정 버튼 ─────────────────────────────────────────────── */
+    .id-bottom{
+      position:sticky; bottom:0; padding:1.2rem 2rem 2.4rem; background:#fff;
+      border-top:1px solid #f1f3f5;
+    }
+    .id-bottom .btn-lg{
+      width:100%; border-radius:1.4rem; font-size:1.7rem; font-weight:700;
+      padding:1.7rem 1rem;
+      display:inline-flex; align-items:center; justify-content:center; gap:.8rem;
+    }
+    .id-bottom .btn-lg .check{
+      display:inline-block; width:1.8rem; height:1.8rem;
+      background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 12 10 18 20 6'/></svg>") no-repeat center/contain;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <main id="main">
+      <div class="id-app">
+
+        <div class="id-body">
+          <!-- 제목 / 설명 -->
+          <h2 class="l-tit id-tit">모바일 신분증<br>인증을 완료하셨나요?</h2>
+          <p class="id-desc">인증을 완료하셨다면, 아래 <span class="em">[인증완료]</span> 버튼을 눌러주세요</p>
+
+          <!-- 신분증 스캔 일러스트 (Lottie: 카드 바운스 + 좌우 스캔 바) -->
+          <div class="id-scan-frame">
+            <span class="corner tl"></span>
+            <span class="corner tr"></span>
+            <span class="corner bl"></span>
+            <span class="corner br"></span>
+
+            <!-- ★ 인증 확인 대기 뱃지 (HTML) -->
+            <span class="status-pill" role="status" aria-live="polite">인증 확인 대기</span>
+
+            <div class="lottie" id="idScanLottie" aria-hidden="true"></div>
+          </div>
+
+          <!-- ★ 헬퍼 행: 안내 텍스트 + 다시 인증하기 링크 -->
+          <div class="help-row">
+            <span class="help-txt">앱이 안 켜지거나 문제가 있나요?</span>
+            <button type="button" class="help-link" id="retryBtn">다시 인증하기</button>
+          </div>
+        </div>
+
+        <!-- 하단 고정 CTA -->
+        <div class="id-bottom">
+          <button type="button" class="btn-lg btn-primary" id="completeBtn">
+            <span class="check" aria-hidden="true"></span>인증완료
+          </button>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- 우리캐피탈 공통 스크립트 -->
+  <script src="https://www.wooricap.com/assets/js/jquery/jquery-3.6.1.min.js"></script>
+  <script src="https://www.wooricap.com/assets/js/jquery/jquery.tmpl.js"></script>
+  <script src="https://www.wooricap.com/assets/js/cmm/js.cookie.min.js"></script>
+  <script src="https://www.wooricap.com/assets/js/cmm/jbwrcUtil.js"></script>
+  <script src="https://www.wooricap.com/assets/js/cmm/jbwrcFnc.js"></script>
+  <script src="https://www.wooricap.com/assets/js/cmm/jbwrcEvent.js"></script>
+  <script src="https://www.wooricap.com/assets/js/ui/jb-layout.js"></script>
+  <script src="https://www.wooricap.com/assets/js/ui/jb-ui.js"></script>
+
+  <script>
+    // Lottie 애니메이션 로드 (id-card-scan.json — 카드 바운스 + 좌우 스캔 바)
+    (function () {
+      if (!window.lottie) return;
+      lottie.loadAnimation({
+        container: document.getElementById('idScanLottie'),
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        path: '../assets/lottie/id-card-scan.json'
+      });
+    })();
+
+    // 다시 인증하기 / 인증완료 핸들러 (자리표시)
+    document.getElementById('retryBtn').addEventListener('click', function () {
+      alert('모바일 신분증 앱을 다시 실행합니다.');
+    });
+    document.getElementById('completeBtn').addEventListener('click', function () {
+      alert('인증완료 처리합니다.');
+    });
+  </script>
+</body>
+</html>

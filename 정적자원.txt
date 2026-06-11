@@ -1,0 +1,48 @@
+- CSS 파일
+https://www.wooricap.com/assets/css/datepicker.css
+https://www.wooricap.com/assets/css/jb-common.css
+https://www.wooricap.com/assets/css/jb-font.css
+https://www.wooricap.com/assets/css/jb-layout.css
+https://www.wooricap.com/assets/css/jb-reset.css
+https://www.wooricap.com/assets/css/jb-style.css
+https://www.wooricap.com/assets/css/style-contents.css
+https://www.wooricap.com/assets/css/style-cst.css
+https://www.wooricap.com/assets/css/style-fin.css
+https://www.wooricap.com/assets/css/style-product.css
+https://www.wooricap.com/assets/css/swiper-bundle.min.css
+https://www.wooricap.com/assets/css/style-main.css	// 메인화면에서만 load
+
+- 폰트 파일
+https://www.wooricap.com/assets/fonts/HGGGothicssi-200.woff2
+https://www.wooricap.com/assets/fonts/Pretendard-Bold.woff2
+https://www.wooricap.com/assets/fonts/Pretendard-ExtraBold.woff2
+https://www.wooricap.com/assets/fonts/Pretendard-Medium.woff2
+https://www.wooricap.com/assets/fonts/Pretendard-Regular.woff2
+https://www.wooricap.com/assets/fonts/Pretendard-SemiBold.woff2
+
+- JavaScript 파일
+https://www.wooricap.com/assets/js/cmm/HPApp.js
+https://www.wooricap.com/assets/js/cmm/MDMutilingual.js?r=1501
+https://www.wooricap.com/assets/js/cmm/common_auth.js?r=1501
+https://www.wooricap.com/assets/js/cmm/common_stpl.js?r=1501
+https://www.wooricap.com/assets/js/cmm/common_stpl_dtl.js?r=1501
+https://www.wooricap.com/assets/js/cmm/jbwrcAppInterface.js?r=1501
+https://www.wooricap.com/assets/js/cmm/jbwrcEvent.js?r=1501
+https://www.wooricap.com/assets/js/cmm/jbwrcFnc.js?r=1501
+https://www.wooricap.com/assets/js/cmm/jbwrcUtil.js?r=1501
+https://www.wooricap.com/assets/js/cmm/js.cookie.min.js
+https://www.wooricap.com/assets/js/cmm/qrcode.min.js
+https://www.wooricap.com/assets/js/cmm/rxjs.umd.min.js
+https://www.wooricap.com/assets/js/cmm/xtractor-cookie.js
+https://www.wooricap.com/assets/js/inputmask/inputmask.extensions.js
+https://www.wooricap.com/assets/js/inputmask/inputmask.js
+https://www.wooricap.com/assets/js/inputmask/jquery.inputmask.js
+https://www.wooricap.com/assets/js/jquery/jquery-3.6.1.min.js
+https://www.wooricap.com/assets/js/jquery/jquery.tmpl.js
+https://www.wooricap.com/assets/js/moment/moment.min.js
+https://www.wooricap.com/assets/js/ui/jb-layout.js?r=1501
+https://www.wooricap.com/assets/js/ui/jb-ui.js?r=1501
+
+
+
+

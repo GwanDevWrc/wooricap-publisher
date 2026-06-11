@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>신분증 인증 방법 선택 - 우리캐피탈</title>
+  <link rel="stylesheet" href="../assets/css/jb-common.css">
+  <link rel="stylesheet" href="../assets/css/jb-style.css">
+  <style>
+    /* 시안 전용 보강 스타일 (디자인 시스템에 정확히 매칭되는 패턴이 없는 부분만 최소 추가) */
+
+    /* 헤더 - 뒤로가기 + 진행 바 */
+    .auth-header{position:relative;display:flex;align-items:center;height:5.6rem;padding:0 1.6rem;background:var(--primaryWhite);}
+    .auth-header .btn-back{width:2.4rem;height:2.4rem;border:0;background:transparent url('../assets/img/icon/ico_back.svg') center no-repeat;background-size:contain;cursor:pointer;}
+    .progress-bar{position:absolute;left:0;right:0;bottom:0;height:.2rem;background:#F1F1F1;}
+    .progress-bar .progress-fill{height:100%;background:var(--primaryBlue);transition:width .3s;}
+
+    /* 본문 컨텐츠 영역 */
+    .select-contents{padding:2rem 2rem 4rem;}
+    .step-info{font-size:1.4rem;font-weight:500;color:var(--primaryBlue);line-height:2rem;margin-bottom:1.6rem;}
+    .step-info .step-divider{color:var(--subTxt);margin:0 .4rem;font-weight:400;}
+    .step-info .step-label{color:var(--primaryBlack);font-weight:500;}
+    .step-info .step-arrow{color:var(--subTxt);margin-left:.4rem;}
+    .l-tit{font-size:2.4rem;font-weight:700;line-height:3.4rem;color:var(--primaryBlack);letter-spacing:-0.02em;margin-bottom:.8rem;}
+    .sub-desc{font-size:1.4rem;font-weight:400;line-height:2rem;color:var(--subTxt);margin-bottom:3.2rem;}
+
+    /* 인증 방법 선택 카드 리스트 */
+    .auth-option-list{display:flex;flex-direction:column;gap:1.2rem;}
+    .auth-option-card{position:relative;width:100%;padding:2rem;border:0.15rem solid #E6E6E6;border-radius:1.6rem;background:var(--primaryWhite);text-align:left;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .05s;display:flex;align-items:center;gap:1.6rem;}
+    .auth-option-card:hover{border-color:var(--primaryBlue);box-shadow:0 .4rem 1.6rem rgba(5,101,240,0.08);}
+    .auth-option-card:active{transform:scale(0.99);}
+    .auth-option-card:focus-visible{outline:.3rem solid rgba(5,101,240,0.3);outline-offset:.2rem;}
+    .auth-option-card .auth-option-icon{flex:0 0 6rem;width:6rem;height:6rem;border-radius:1.4rem;background:#EFF5FF;display:flex;align-items:center;justify-content:center;}
+    .auth-option-card .auth-option-icon img{width:4rem;height:4rem;display:block;}
+    .auth-option-card .auth-option-content{flex:1;min-width:0;}
+    .auth-option-card .auth-option-title-row{display:flex;align-items:center;gap:.6rem;margin-bottom:.4rem;}
+    .auth-option-card .auth-option-title{font-size:1.7rem;font-weight:700;line-height:2.4rem;color:var(--primaryBlack);}
+    .auth-option-card .auth-option-desc{font-size:1.3rem;font-weight:400;line-height:1.9rem;color:var(--subTxt);}
+    .auth-option-card .auth-option-arrow{flex:0 0 2rem;width:2rem;height:2rem;}
+    .auth-option-card .auth-option-arrow img{width:100%;height:100%;display:block;}
+
+    /* NEW 뱃지 (디자인 시스템 .badge.type-new 톤 활용 + 채워진 변형) */
+    .badge-new{display:inline-block;height:1.8rem;line-height:1.8rem;padding:0 .6rem;border-radius:.4rem;background:#FFB024;color:var(--primaryWhite);font-size:1rem;font-weight:700;letter-spacing:0.02em;}
+
+    /* 하단 안내 - 보안/사용 목적 */
+    .security-notice{margin-top:3.2rem;padding:1.4rem 1.6rem;background:#F5F7FA;border-radius:1rem;display:flex;gap:.8rem;align-items:center;}
+    .security-notice img{flex:0 0 1.6rem;width:1.6rem;height:1.6rem;display:block;}
+    .security-notice .security-text{flex:1;font-size:1.2rem;font-weight:400;line-height:1.8rem;color:var(--subTxt);}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header id="header">
+      <div class="auth-header">
+        <button class="btn-back" type="button" aria-label="뒤로가기"></button>
+        <div class="progress-bar" aria-hidden="true">
+          <div class="progress-fill" style="width:60%;"></div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="select-contents">
+        <p class="step-info">
+          <span>3/5</span>
+          <span class="step-divider">·</span>
+          <span class="step-label">고객정보 입력</span>
+          <span class="step-arrow">›</span>
+        </p>
+
+        <h2 class="l-tit">신분증 인증 방법을<br>선택해주세요</h2>
+        <p class="sub-desc">편한 방법으로 본인 인증을 진행해주세요.</p>
+
+        <div class="auth-option-list" role="list">
+          <button type="button" class="auth-option-card" role="listitem">
+            <div class="auth-option-icon" aria-hidden="true">
+              <img src="../assets/img/icon/ico_id_camera.svg" alt="">
+            </div>
+            <div class="auth-option-content">
+              <div class="auth-option-title-row">
+                <span class="auth-option-title">신분증 촬영</span>
+              </div>
+              <p class="auth-option-desc">주민등록증이나 운전면허증을<br>카메라로 촬영해 인증해요</p>
+            </div>
+            <div class="auth-option-arrow" aria-hidden="true">
+              <img src="../assets/img/icon/ico_arrow_right_gray.svg" alt="">
+            </div>
+          </button>
+
+          <button type="button" class="auth-option-card" role="listitem">
+            <div class="auth-option-icon" aria-hidden="true">
+              <img src="../assets/img/icon/ico_mobile_id.svg" alt="">
+            </div>
+            <div class="auth-option-content">
+              <div class="auth-option-title-row">
+                <span class="auth-option-title">모바일 신분증</span>
+                <span class="badge-new">NEW</span>
+              </div>
+              <p class="auth-option-desc">모바일 신분증 앱으로<br>더 빠르고 안전하게 인증해요</p>
+            </div>
+            <div class="auth-option-arrow" aria-hidden="true">
+              <img src="../assets/img/icon/ico_arrow_right_gray.svg" alt="">
+            </div>
+          </button>
+        </div>
+
+        <div class="security-notice" role="note">
+          <img src="../assets/img/icon/ico_shield_check.svg" alt="" aria-hidden="true">
+          <p class="security-text">인증한 신분증 정보는 본인 확인 용도로만 사용돼요.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/jquery/jquery-3.6.1.min.js"></script>
+  <script src="../assets/js/jquery/jquery.tmpl.js"></script>
+  <script src="../assets/js/cmm/js.cookie.min.js"></script>
+  <script src="../assets/js/cmm/jbwrcUtil.js"></script>
+  <script src="../assets/js/cmm/jbwrcFnc.js"></script>
+  <script src="../assets/js/cmm/jbwrcEvent.js"></script>
+  <script src="../assets/js/ui/jb-layout.js"></script>
+  <script src="../assets/js/ui/jb-ui.js"></script>
+</body>
+</html>

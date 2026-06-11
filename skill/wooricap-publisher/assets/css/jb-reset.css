@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;appearance:none;-webkit-appearance:none;-moz-appearance:none;resize:none;text-size-adjust:none;font-style:normal;}
+
+html{position:relative;width:100%;height:100%;-webkit-tap-highlight-color:rgba(0, 0, 0, .1);scroll-behavior:auto;}
+a,abbr,acronym,address,article,aside,audio,b,blockquote,body,button,canvas,caption,cite,code,dd,del,details,dfn,div,dl,dt,em,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,hr,i,iframe,img,input,ins,kbd,label,legend,li,main,mark,menu,nav,object,ol,option,p,pre,q,samp,section,select,small,span,strong,sub,summary,sup,table,tbody,td,textarea,tfoot,th,thead,time,tr,ul,var,video{margin:0;padding:0;border:0;background:0 0;box-sizing:border-box;}
+/* =====  Media ===== */
+audio:not([controls]){display:none;height:0;}
+/* =====  Link ===== */
+a{color:inherit;}
+a:link{text-decoration:none;}
+a:active,a:hover{text-decoration:none;}
+a:visited{text-decoration:none;}
+/* =====  Typography ===== */
+h1,h2,h3,h4,h5,h6{font-weight:400;font-size:inherit;}
+b{font-weight:700}
+strong{font-weight:400;line-height:inherit;}
+hr{display:none;box-sizing:content-box;height:0;}
+address,caption,cite,code,dfn,em,var{font-style:normal;font-weight:400;}
+abbr,acronym,img{border:0;}
+img{max-width:100%;vertical-align:top;}
+pre{white-space:pre-wrap;}
+q{quotes:"\201C""\201D""\2018""\2019";}
+sub,sup{line-height:0;position:relative;vertical-align:baseline;}
+sup{top:-.5em;font-size:1rem;}
+sub{bottom:-.25em;}
+em,span{vertical-align:baseline;font-size:inherit;font-weight:inherit;}
+font{font-size:inherit;font-weight:inherit;}
+/* List */
+li,ol,ul{list-style:none;}
+/* =====  Figures ===== */
+figure{margin:0;}
+/* =====  Forms ===== */
+button{color:inherit;}
+button,input,select,textarea{border:0 none;}
+textarea{vertical-align:top;border:solid 1px #ccc;}
+/* =====  Table ===== */
+table{empty-cells:show;border-spacing:0;table-layout:fixed;border-collapse:collapse;}
+fieldset legend,table caption{display:block;overflow:hidden;position:absolute;width:1px;height:1px;text-indent:-9999px;}
+abbr[title]{border-bottom:1px dotted;}  
+
+/* 접근성 */
+/* :focus-visible{outline-color:#595df0;} */
+/* input:focus{outline:none;} */
+a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible{outline:2px solid #5b9df0;outline-offset:2px;}
+input[type=radio]:focus-visible,
+input[type=checkbox ]:focus-visible{outline-offset:1px;}
+input[readonly]{outline:0;}
+
+
+/* input:focus-visible, input:focus-within{outline:2px solid #B0CCF6;outline-offset:2px;} */
+/* [tabindex]:focus-visible{outline:2px solid #5b9df0;outline-offset:2px;} */

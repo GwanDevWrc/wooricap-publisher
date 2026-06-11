@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>자동차담보대출 심사요청 완료 - 우리캐피탈</title>
+  <link rel="stylesheet" href="../assets/css/jb-common.css">
+  <link rel="stylesheet" href="../assets/css/jb-style.css">
+  <style>
+    /* 시안 전용 보강 스타일 (디자인 시스템에 정확히 매칭되는 패턴이 없는 부분만 최소 추가) */
+
+    /* 진행 안내 섹션 라벨 - 좌우 가로선 */
+    .section-divider{display:flex;align-items:center;gap:1.2rem;margin:3.2rem 0 2rem;}
+    .section-divider::before,
+    .section-divider::after{content:'';flex:1;height:1px;background:var(--borderColor);}
+    .section-divider .section-label{font-size:1.3rem;font-weight:500;color:var(--subTxt);letter-spacing:-0.02em;}
+
+    /* 진행 단계 리스트 (남은 절차) */
+    .progress-steps{padding:.4rem 0;}
+    .progress-steps ol{list-style:none;padding:0;margin:0;}
+    .progress-steps li{position:relative;padding-left:4.4rem;padding-bottom:2.4rem;}
+    .progress-steps li:last-child{padding-bottom:0;}
+    .progress-steps li:not(:last-child)::after{content:'';position:absolute;left:1.5rem;top:3.4rem;bottom:.4rem;width:.2rem;background:var(--borderColor);}
+    .progress-steps .num-circle{position:absolute;left:0;top:.2rem;width:3.2rem;height:3.2rem;border-radius:50%;background:var(--primaryBlue);color:var(--primaryWhite);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;}
+    .progress-steps .step-title{font-size:1.6rem;font-weight:600;line-height:2.4rem;color:var(--primaryBlack);}
+    .progress-steps .step-sub{margin-top:.2rem;font-size:1.2rem;font-weight:400;line-height:1.8rem;color:var(--subTxt);}
+
+    /* 완료 체크 아이콘 */
+    .finish-check-icon{display:flex;justify-content:center;margin-bottom:2.4rem;}
+    .finish-check-icon img{width:8rem;height:8rem;display:block;}
+
+    /* finish-txt-wrap 시안 톤에 맞춘 미세 조정 (배경 이미지 ::before 비활성화) */
+    .finish-txt-wrap.type-check{margin-top:4.8rem;margin-bottom:0;padding-top:0;}
+    .finish-txt-wrap.type-check::before{display:none;}
+    .finish-txt-wrap .finish-tit{font-size:2.4rem;line-height:3.4rem;letter-spacing:-0.02em;}
+    .finish-txt-wrap .finish-desc{padding-top:1.2rem;font-size:1.4rem;font-weight:400;line-height:2.2rem;color:var(--subTxt);}
+
+    /* 화면 본문 영역 - 하단 고정 버튼만큼 패딩 */
+    .complete-contents{padding:0 2rem 12rem;}
+
+    /* 하단 고정 버튼 영역 */
+    .btn-fixed-bottom{position:fixed;left:0;right:0;bottom:0;padding:1.2rem 2rem 2.4rem;background:var(--primaryWhite);}
+    .btn-fixed-bottom .btn-lg{width:100%;}
+  </style>
+</head>
+<body class="finish-ui">
+  <div class="wrapper">
+    <main id="main">
+      <div class="complete-contents">
+
+        <div class="finish-check-icon" aria-hidden="true">
+          <img src="../assets/img/icon/ico_finish_check_new.svg" alt="">
+        </div>
+
+        <div class="finish-txt-wrap type-check">
+          <p class="finish-tit">자동차담보대출 심사요청이<br>완료되었어요</p>
+          <p class="finish-desc">전문 상담원이 연락드릴 예정입니다.<br>아래 남은 절차를 확인해주세요.</p>
+        </div>
+
+        <div class="section-divider" aria-label="남은 절차 섹션">
+          <span class="section-label">남은 절차</span>
+        </div>
+
+        <div class="line-box-wrap">
+          <div class="progress-steps">
+            <ol>
+              <li>
+                <div class="num-circle" aria-hidden="true">1</div>
+                <p class="step-title">상담원 전화</p>
+              </li>
+              <li>
+                <div class="num-circle" aria-hidden="true">2</div>
+                <p class="step-title">송금여부 확인</p>
+                <p class="step-sub">내금융관리</p>
+              </li>
+              <li>
+                <div class="num-circle" aria-hidden="true">3</div>
+                <p class="step-title">대출완료</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-fixed-bottom">
+        <button type="button" class="btn-lg btn-primary">확인</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/jquery/jquery-3.6.1.min.js"></script>
+  <script src="../assets/js/jquery/jquery.tmpl.js"></script>
+  <script src="../assets/js/cmm/js.cookie.min.js"></script>
+  <script src="../assets/js/cmm/jbwrcUtil.js"></script>
+  <script src="../assets/js/cmm/jbwrcFnc.js"></script>
+  <script src="../assets/js/cmm/jbwrcEvent.js"></script>
+  <script src="../assets/js/ui/jb-layout.js"></script>
+  <script src="../assets/js/ui/jb-ui.js"></script>
+</body>
+</html>

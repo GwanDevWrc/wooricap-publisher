@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>증빙서류 추가/삭제 버튼 | JB우리캐피탈</title>
+  <link rel="stylesheet" href="https://www.wooricap.com/assets/css/jb-common.css">
+  <link rel="stylesheet" href="https://www.wooricap.com/assets/css/jb-style.css">
+  <style>
+    /* ── 데모 페이지 보정 ───────────────────────────────────────────── */
+    html, body { background:#fff; }
+    #main { min-width:0 !important; padding-top:0 !important; }
+    .demo-app{ max-width:46rem; margin:0 auto; padding:2.4rem; background:#fff; }
+    .demo-app + .demo-app{ margin-top:.8rem; border-top:1px dashed #e6eaef; padding-top:3.2rem; }
+    .demo-label{ font-size:1.1rem; font-weight:700; color:#9aa3ad; letter-spacing:.04em; text-transform:uppercase; margin-bottom:1.2rem; }
+
+    /* =================================================================
+       ★ 증빙서류 섹션 헤더 + 추가/삭제 버튼
+       (이 블록을 운영 CSS에 추가하시면 됩니다)
+       ================================================================= */
+
+    /* 섹션 타이틀 행 (제목 + 우측 버튼 그룹) */
+    .attach-head{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:1.2rem; margin-bottom:1.4rem;
+    }
+    .attach-head .attach-title{
+      font-size:1.7rem; font-weight:700; color:#1b2733; letter-spacing:-.025em;
+    }
+
+    /* 버튼 그룹 (추가 / 삭제 나란히) */
+    .attach-actions{ display:flex; align-items:center; gap:.6rem; }
+
+    /* 공통 버튼 베이스 — 작고 라운드, 아이콘 + 텍스트 */
+    .attach-btn{
+      display:inline-flex; align-items:center; gap:.4rem;
+      height:3.2rem; padding:0 1.2rem;
+      border-radius:.8rem; border:1px solid transparent;
+      font-size:1.3rem; font-weight:600; letter-spacing:-.02em;
+      background:transparent; cursor:pointer; font-family:inherit;
+      transition:background-color .15s, border-color .15s, color .15s;
+    }
+    .attach-btn .ico{
+      display:inline-block; width:1.4rem; height:1.4rem;
+      background-position:center; background-repeat:no-repeat; background-size:contain;
+    }
+    .attach-btn:disabled{ opacity:.4; cursor:not-allowed; }
+
+    /* 추가 버튼 — primary blue 라인 (강조) */
+    .attach-btn.type-add{
+      color:var(--primaryBlue);
+      border-color:#cfdcf3;
+      background:#f3f7fe;
+    }
+    .attach-btn.type-add .ico{
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%230565F0' stroke-width='2.2' stroke-linecap='round'><path d='M8 3v10M3 8h10'/></svg>");
+    }
+    .attach-btn.type-add:hover{ background:#e5eefb; border-color:#a6c1ed; }
+    .attach-btn.type-add:active{ background:#d7e4f7; }
+
+    /* 삭제 버튼 — 회색 라인 (보조) */
+    .attach-btn.type-remove{
+      color:#5b6473;
+      border-color:#dde2e8;
+      background:#fff;
+    }
+    .attach-btn.type-remove .ico{
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%235B6473' stroke-width='2.2' stroke-linecap='round'><path d='M3 8h10'/></svg>");
+    }
+    .attach-btn.type-remove:hover{ background:#f3f5f8; border-color:#c4cbd3; color:#1b2733; }
+    .attach-btn.type-remove:active{ background:#e9edf2; }
+
+    /* 데모용 첨부 카드 (참고 — 실제 운영은 본인 마크업 사용) */
+    .demo-card{
+      margin-top:1.2rem; padding:1.6rem 1.4rem;
+      background:#fff; border:1px solid #eef1f5; border-radius:1.2rem;
+    }
+    .demo-card + .demo-card{ margin-top:1rem; }
+    .demo-card .cap{
+      display:inline-block; padding:.3rem .8rem; border-radius:10rem;
+      background:#eaf1fe; color:var(--primaryBlue); font-size:1.1rem; font-weight:700;
+      letter-spacing:-.02em;
+    }
+    .demo-card .label{ margin-left:.6rem; font-size:1.3rem; font-weight:600; color:#3a444f; }
+    .demo-card .row{ margin-top:.8rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+    .demo-card .fn{ font-size:1.3rem; color:#1b2733; }
+    .demo-card .right{ display:flex; align-items:center; gap:.6rem; }
+    .demo-card .btn-x{ background:none; border:0; padding:.4rem; cursor:pointer; color:#8a93a0; font-size:1.4rem; }
+    .demo-card .btn-pick{ font-size:1.2rem; font-weight:600; color:#3a444f; background:#f3f5f8; border:1px solid #e3e6eb; border-radius:.6rem; padding:.6rem 1rem; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <main id="main">
+
+    <!-- ─────────────────────────────────────────────
+         데모 1: 정적 보기 (헤더 + 버튼 + 카드 1개)
+         ───────────────────────────────────────────── -->
+    <div class="demo-app">
+      <div class="demo-label">증빙서류 섹션 헤더 (추가/삭제 버튼)</div>
+
+      <div class="attach-head">
+        <h3 class="attach-title">증빙서류</h3>
+        <div class="attach-actions">
+          <button type="button" class="attach-btn type-add" id="addBtn">
+            <span class="ico" aria-hidden="true"></span>추가
+          </button>
+          <button type="button" class="attach-btn type-remove" id="removeBtn">
+            <span class="ico" aria-hidden="true"></span>삭제
+          </button>
+        </div>
+      </div>
+
+      <div id="cardList">
+        <div class="demo-card">
+          <span class="cap">첨부완료</span><span class="label">증빙서류</span>
+          <div class="row">
+            <span class="fn">IMG_0591.jpeg</span>
+            <span class="right">
+              <button type="button" class="btn-x" aria-label="제거">×</button>
+              <button type="button" class="btn-pick">사진첨부</button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // 데모 핸들러 — 실제 운영에선 본인 attach 컴포넌트 추가/삭제 로직과 연결
+    (function(){
+      var list = document.getElementById('cardList');
+      var add = document.getElementById('addBtn');
+      var rem = document.getElementById('removeBtn');
+      function syncRemove(){ rem.disabled = list.querySelectorAll('.demo-card').length <= 1; }
+      function tpl(){
+        var d = document.createElement('div'); d.className = 'demo-card';
+        d.innerHTML = '<span class="cap">첨부완료</span><span class="label">증빙서류</span>'+
+          '<div class="row"><span class="fn">IMG_0591.jpeg</span>'+
+          '<span class="right"><button type="button" class="btn-x" aria-label="제거">×</button>'+
+          '<button type="button" class="btn-pick">사진첨부</button></span></div>';
+        return d;
+      }
+      add.addEventListener('click', function(){ list.appendChild(tpl()); syncRemove(); });
+      rem.addEventListener('click', function(){
+        var items = list.querySelectorAll('.demo-card');
+        if (items.length > 1) { items[items.length-1].remove(); }
+        syncRemove();
+      });
+      syncRemove();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(del \"C:\\\\Users\\\\user\\\\Desktop\\\\wooricap_publisher_claude\\\\assets\\\\img\\\\icon\\\\ico_arrow_right_white.svg\")",
+      "Bash(mkdir \"C:\\\\Users\\\\user\\\\Desktop\\\\wooricap_publisher_claude\\\\.claude\" 2>nul; ls \"C:\\\\Users\\\\user\\\\Desktop\\\\wooricap_publisher_claude\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(where python *)",
+      "Bash(where py *)",
+      "Bash(py --version)",
+      "Bash(where node *)",
+      "Bash(where npx *)",
+      "Bash(cp \"C:\\\\Users\\\\user\\\\Downloads\\\\1_모바일신분증 퍼블 초안_260606\\\\id-card-scan.json\" \"C:\\\\Users\\\\user\\\\Desktop\\\\wooricap_publisher_claude\\\\assets\\\\lottie\\\\id-card-scan.json\" 2>&1; ls \"C:\\\\Users\\\\user\\\\Desktop\\\\wooricap_publisher_claude\\\\assets\\\\lottie\")",
+      "Bash(ls \"C:\\\\Users\\\\user\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\46ca4db1-04ea-454e-bb99-0524b0efd825\\\\267e8663-00da-4b99-a226-4027dddb9ad2\\\\skills\\\\wooricap-publisher\")",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>근저당권 설정 안내 - 우리캐피탈</title>
+  <link rel="stylesheet" href="../assets/css/jb-common.css">
+  <link rel="stylesheet" href="../assets/css/jb-style.css">
+  <style>
+    /* 시안 전용 보강 스타일 (디자인 시스템에 정확히 매칭되는 패턴이 없는 부분만 최소 추가) */
+
+    /* 완료 체크 아이콘 */
+    .finish-check-icon{display:flex;justify-content:center;margin-bottom:2.4rem;}
+    .finish-check-icon img{width:8rem;height:8rem;display:block;}
+
+    /* finish-txt-wrap 시안 톤에 맞춘 미세 조정 (배경 이미지 ::before 비활성화) */
+    .finish-txt-wrap.type-check{margin-top:4.8rem;margin-bottom:0;padding-top:0;}
+    .finish-txt-wrap.type-check::before{display:none;}
+    .finish-txt-wrap .finish-tit{font-size:2.2rem;line-height:3.2rem;letter-spacing:-0.02em;font-weight:700;}
+    .finish-txt-wrap .finish-tit .fc-blue{font-size:inherit;color:var(--primaryBlue);font-weight:700;}
+
+    /* 데이터 표 (저당권자 / 저당건수) */
+    .info-table-wrap{margin-top:3.2rem;}
+    .info-table{width:100%;border-collapse:collapse;border-radius:1.2rem;overflow:hidden;border:.1rem solid var(--borderColor);}
+    .info-table thead th{padding:1.2rem 1.6rem;background:#F5F7FA;font-size:1.3rem;font-weight:500;color:var(--subTxt);line-height:1.8rem;text-align:center;}
+    .info-table tbody td{padding:1.6rem;font-size:1.5rem;font-weight:500;color:var(--primaryBlack);line-height:2.2rem;text-align:center;border-top:.1rem solid var(--borderColor);background:var(--primaryWhite);}
+
+    /* 하단 안내 문구 (가운데 정렬) */
+    .closing-note{margin-top:2.4rem;text-align:center;font-size:1.4rem;font-weight:400;line-height:2.2rem;color:var(--subTxt);}
+    .closing-note p + p{margin-top:1.6rem;}
+    .closing-note .fc-blue{color:var(--primaryBlue);font-weight:500;}
+
+    /* 화면 본문 영역 - 하단 고정 버튼만큼 패딩 */
+    .complete-contents{padding:0 2rem 12rem;}
+
+    /* 하단 고정 버튼 영역 */
+    .btn-fixed-bottom{position:fixed;left:0;right:0;bottom:0;padding:1.2rem 2rem 2.4rem;background:var(--primaryWhite);}
+    .btn-fixed-bottom .btn-lg{width:100%;}
+  </style>
+</head>
+<body class="finish-ui">
+  <div class="wrapper">
+    <main id="main">
+      <div class="complete-contents">
+
+        <div class="finish-check-icon" aria-hidden="true">
+          <img src="../assets/img/icon/ico_finish_check_new.svg" alt="">
+        </div>
+
+        <div class="finish-txt-wrap type-check">
+          <p class="finish-tit">
+            <span class="fc-blue">홍길동 고객님</span>,<br>
+            고객님의 차량 <span class="fc-blue">123수1234</span>에<br>
+            <span class="fc-blue">1건</span>의 근저당권이 설정되어 있어요
+          </p>
+        </div>
+
+        <div class="info-table-wrap">
+          <table class="info-table">
+            <thead>
+              <tr>
+                <th scope="col">저당권자</th>
+                <th scope="col">저당건수</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>압류내용</td>
+                <td>1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="closing-note">
+          <p>근저당권 설정 해지 시 <span class="fc-blue">대출 한도조회</span>가 가능합니다.</p>
+          <p>압류내역 문의 후 설정해지 부탁드려요.<br>감사합니다.</p>
+        </div>
+
+      </div>
+
+      <div class="btn-fixed-bottom">
+        <button type="button" class="btn-lg btn-primary">확인</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/jquery/jquery-3.6.1.min.js"></script>
+  <script src="../assets/js/jquery/jquery.tmpl.js"></script>
+  <script src="../assets/js/cmm/js.cookie.min.js"></script>
+  <script src="../assets/js/cmm/jbwrcUtil.js"></script>
+  <script src="../assets/js/cmm/jbwrcFnc.js"></script>
+  <script src="../assets/js/cmm/jbwrcEvent.js"></script>
+  <script src="../assets/js/ui/jb-layout.js"></script>
+  <script src="../assets/js/ui/jb-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (preview server 캐시)
+node_modules/
+npm-debug.log*
+
+# 압축 원본 (필요 시 다시 압축 가능)
+assets.zip
+reference.zip
+
+# 빌드 캐시
+.cache/
+dist/
+build/
+
+# 로그
+*.log
+
+# 환경 변수
+.env
+.env.local

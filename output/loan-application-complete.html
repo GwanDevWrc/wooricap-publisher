@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>대출 신청 완료 - 우리캐피탈</title>
+  <link rel="stylesheet" href="../assets/css/jb-common.css">
+  <link rel="stylesheet" href="../assets/css/jb-style.css">
+  <style>
+    /* 시안 전용 보강 스타일 (디자인 시스템에 정확히 매칭되는 패턴이 없는 부분만 최소 추가) */
+
+    /* 진행 안내 섹션 라벨 - 좌우 가로선 */
+    .section-divider{display:flex;align-items:center;gap:1.2rem;margin:3.2rem 0 2rem;}
+    .section-divider::before,
+    .section-divider::after{content:'';flex:1;height:1px;background:var(--borderColor);}
+    .section-divider .section-label{font-size:1.3rem;font-weight:500;color:var(--subTxt);letter-spacing:-0.02em;}
+
+    /* 안내 카드 - line-box-wrap 기반, 아이콘 + 본문 가로 배치 */
+    .info-card{display:flex;gap:1.6rem;align-items:flex-start;}
+    .info-card + .info-card{margin-top:1.2rem;}
+    .info-card .info-icon{flex:0 0 4.4rem;width:4.4rem;height:4.4rem;border-radius:50%;background:#F2F5F7;display:flex;align-items:center;justify-content:center;}
+    .info-card .info-icon img{width:2.4rem;height:2.4rem;display:block;}
+    .info-card .info-body{flex:1;min-width:0;}
+    .info-card .info-title{font-size:1.6rem;font-weight:700;line-height:2.2rem;color:var(--primaryBlack);margin-bottom:.6rem;}
+    .info-card .info-desc{font-size:1.4rem;font-weight:400;line-height:2.2rem;color:#4D4D4D;}
+    .info-card .info-desc .strong{font-weight:600;color:var(--primaryBlack);}
+    .info-card .info-tel{font-size:2rem;font-weight:700;line-height:2.6rem;color:var(--primaryBlack);}
+
+    /* 노란 경고 박스 (info-card 아래, 카드 풀폭) */
+    .notice-warning{margin-top:1.6rem;padding:1.2rem 1.4rem;background:#FFF8E5;border-radius:1rem;display:flex;gap:1rem;align-items:flex-start;}
+    .notice-warning .notice-ico{flex:0 0 1.6rem;width:1.6rem;height:1.6rem;margin-top:.2rem;display:block;}
+    .notice-warning .notice-txt{flex:1;font-size:1.3rem;font-weight:400;line-height:2rem;color:#7A5800;}
+
+    /* 상담시간 서브 박스 (info-card 아래, 카드 풀폭) */
+    .sub-info-box{margin-top:1.6rem;padding:1.2rem 1.4rem;background:#F0F2F5;border-radius:1rem;display:flex;gap:1rem;align-items:center;}
+    .sub-info-box .sub-info-ico{flex:0 0 1.6rem;width:1.6rem;height:1.6rem;display:block;}
+    .sub-info-box .sub-info-text{flex:1;display:flex;flex-direction:column;gap:.2rem;}
+    .sub-info-box .sub-info-label{font-size:1.2rem;font-weight:600;color:var(--primaryBlack);line-height:1.6rem;}
+    .sub-info-box .sub-info-value{font-size:1.2rem;font-weight:400;color:#4D4D4D;line-height:1.8rem;}
+
+    /* 완료 체크 아이콘 */
+    .finish-check-icon{display:flex;justify-content:center;margin-bottom:2.4rem;}
+    .finish-check-icon img{width:8rem;height:8rem;display:block;}
+
+    /* finish-txt-wrap 시안 톤에 맞춘 미세 조정 (배경 이미지 ::before 비활성화) */
+    .finish-txt-wrap.type-check{margin-top:4.8rem;margin-bottom:0;padding-top:0;}
+    .finish-txt-wrap.type-check::before{display:none;}
+    .finish-txt-wrap .finish-tit{font-size:2.4rem;line-height:3.4rem;letter-spacing:-0.02em;}
+
+    /* 화면 본문 영역 - 하단 고정 버튼만큼 패딩 */
+    .complete-contents{padding:0 2rem 12rem;}
+
+    /* 하단 고정 버튼 영역 */
+    .btn-fixed-bottom{position:fixed;left:0;right:0;bottom:0;padding:1.2rem 2rem 2.4rem;background:var(--primaryWhite);}
+    .btn-fixed-bottom .btn-lg{width:100%;}
+  </style>
+</head>
+<body class="finish-ui">
+  <div class="wrapper">
+    <main id="main">
+      <div class="complete-contents">
+
+        <div class="finish-check-icon" aria-hidden="true">
+          <img src="../assets/img/icon/ico_finish_check_new.svg" alt="">
+        </div>
+
+        <div class="finish-txt-wrap type-check">
+          <p class="finish-tit">대출 신청이<br>완료되었어요</p>
+        </div>
+
+        <div class="section-divider" aria-label="진행 안내 섹션">
+          <span class="section-label">진행 안내</span>
+        </div>
+
+        <!-- 카드 1: 심사 및 입금 안내 -->
+        <div class="line-box-wrap">
+          <div class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <img src="../assets/img/icon/ico_clock_blue.svg" alt="">
+            </div>
+            <div class="info-body">
+              <p class="info-title">심사 및 입금 안내</p>
+              <p class="info-desc">빠르면 30분 이내, 늦어도 오늘 중으로 대출금이 입금될 예정이에요.</p>
+            </div>
+          </div>
+
+          <div class="notice-warning" role="note">
+            <img class="notice-ico" src="../assets/img/icon/ico_warning_yellow.svg" alt="" aria-hidden="true">
+            <p class="notice-txt">다만, 최종 확인 과정에서 신용상태(연체, 타사 대출 등)에 변동이 발생하면 대출 실행이 제한될 수 있으니 유의해 주세요.</p>
+          </div>
+        </div>
+
+        <!-- 카드 2: 차량 근저당 설정 안내 -->
+        <div class="line-box-wrap">
+          <div class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <img src="../assets/img/icon/ico_car_blue.svg" alt="">
+            </div>
+            <div class="info-body">
+              <p class="info-title">차량 근저당 설정 안내</p>
+              <p class="info-desc">익영업일에 차량 근저당 설정이 진행돼요. <span class="strong">설정 완료 시까지 차량 양도나 추가 저당권 설정(동시대출) 등의 행위를 하지 않도록</span> 주의 부탁드려요.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 카드 3: 대출 관련 문의 -->
+        <div class="line-box-wrap">
+          <div class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <img src="../assets/img/icon/ico_call_blue.svg" alt="">
+            </div>
+            <div class="info-body">
+              <p class="info-title">대출 관련 문의</p>
+              <p class="info-tel">1688-8700</p>
+            </div>
+          </div>
+
+          <div class="sub-info-box">
+            <img class="sub-info-ico" src="../assets/img/icon/ico_clock_gray.svg" alt="" aria-hidden="true">
+            <div class="sub-info-text">
+              <span class="sub-info-label">상담 가능시간</span>
+              <span class="sub-info-value">영업일 09:00 ~ 18:00 (금요일 17:00)</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-fixed-bottom">
+        <button type="button" class="btn-lg btn-primary">확인</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/jquery/jquery-3.6.1.min.js"></script>
+  <script src="../assets/js/jquery/jquery.tmpl.js"></script>
+  <script src="../assets/js/cmm/js.cookie.min.js"></script>
+  <script src="../assets/js/cmm/jbwrcUtil.js"></script>
+  <script src="../assets/js/cmm/jbwrcFnc.js"></script>
+  <script src="../assets/js/cmm/jbwrcEvent.js"></script>
+  <script src="../assets/js/ui/jb-layout.js"></script>
+  <script src="../assets/js/ui/jb-ui.js"></script>
+</body>
+</html>
