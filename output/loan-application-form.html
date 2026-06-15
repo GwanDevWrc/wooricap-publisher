@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>대출신청서 작성 - 우리캐피탈</title>
+  <link rel="stylesheet" href="../assets/css/jb-common.css">
+  <link rel="stylesheet" href="../assets/css/jb-style.css">
+  <style>
+    /* 시안 전용 보강 스타일 (디자인 시스템에 매칭되는 패턴이 없는 부분만 최소 추가) */
+
+    /* 상단 진행률 라인 (헤더 바로 아래) */
+    .progress-bar{height:.3rem;background:var(--borderColor);}
+    .progress-bar .progress-fill{height:100%;width:40%;background:var(--primaryBlue);transition:width .3s ease;}
+
+    /* 본문 영역 - 하단 고정 버튼만큼 여백 */
+    .form-contents{padding:2.4rem 2rem 12rem;}
+
+    /* 단계 표시 (2/5  대출신청서 작성) */
+    .step-indicator{display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem;}
+    .step-indicator .step-now{font-size:1.3rem;font-weight:700;color:var(--primaryBlue);}
+    .step-indicator .step-total{font-size:1.3rem;font-weight:500;color:var(--subTxt);}
+    .step-indicator .step-name{font-size:1.3rem;font-weight:500;color:var(--subTxt);}
+
+    /* 큰 헤딩 */
+    .form-title{font-size:2.4rem;font-weight:600;line-height:3.2rem;letter-spacing:-0.02em;color:var(--primaryBlack);}
+    .form-title .fc-blue{color:var(--primaryBlue);}
+
+    /* 입력 그룹 간 간격 */
+    .input-con{margin-top:3.2rem;}
+    .input-con:first-of-type{margin-top:3.6rem;}
+    .input-label{display:block;font-size:1.3rem;font-weight:600;color:var(--subTxt);margin-bottom:.8rem;}
+    .input-box{position:relative;display:flex;align-items:center;border-bottom:.1rem solid var(--borderColor);padding-bottom:1rem;}
+    .input-box::after{content:'';position:absolute;left:0;bottom:-.1rem;height:.2rem;width:0;background:var(--primaryBlue);transition:width .25s ease;}
+    .input-con.focus .input-box::after{width:100%;}
+    .input-con.focus .input-label{color:var(--primaryBlue);}
+    .input-default{flex:1;border:0;outline:0;font-size:1.8rem;font-weight:600;color:var(--primaryBlack);background:transparent;padding:0;}
+    .input-default::placeholder{color:#D9D9D9;font-weight:500;}
+    .input-box .input-unit{font-size:1.6rem;font-weight:600;color:var(--primaryBlack);margin-left:.6rem;}
+    .input-box .btn-clear{flex:none;width:2.2rem;height:2.2rem;border:0;border-radius:50%;background:#EBEBEB;color:#888;font-size:1.3rem;line-height:1;cursor:pointer;}
+
+    /* 빠른 금액 선택 칩 */
+    .amount-chips{display:flex;gap:.8rem;margin-top:1.2rem;flex-wrap:wrap;}
+    .amount-chips button{flex:1;min-width:6rem;padding:.9rem 0;border:.1rem solid var(--borderColor);border-radius:.8rem;background:#fff;font-size:1.3rem;font-weight:600;color:var(--defaultBtnTxt);cursor:pointer;}
+    .amount-chips button:active{border-color:var(--primaryBlue);color:var(--primaryBlue);}
+
+    /* 셀렉트형 입력 (우측 화살표) */
+    .input-box.type-select{cursor:pointer;}
+    .input-box.type-select .input-default{pointer-events:none;}
+    .input-box.type-select::before{content:'';position:absolute;right:.2rem;top:50%;width:.9rem;height:.9rem;border-right:.2rem solid #B5B5B5;border-bottom:.2rem solid #B5B5B5;transform:translateY(-70%) rotate(45deg);}
+
+    /* 안내 박스 */
+    .info-box{margin-top:3.2rem;padding:1.6rem 1.8rem;background:#F5F7FA;border-radius:1.2rem;}
+    .info-box .info-tit{display:flex;align-items:center;gap:.6rem;font-size:1.4rem;font-weight:600;color:var(--primaryBlack);}
+    .info-box .info-tit::before{content:'i';display:inline-flex;align-items:center;justify-content:center;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--primaryBlue);color:#fff;font-size:1.2rem;font-weight:700;font-style:italic;}
+    .info-box ul{margin:1rem 0 0;padding:0;list-style:none;}
+    .info-box li{position:relative;padding-left:1rem;font-size:1.3rem;font-weight:400;line-height:2rem;color:var(--subTxt);}
+    .info-box li::before{content:'';position:absolute;left:.1rem;top:.9rem;width:.3rem;height:.3rem;border-radius:50%;background:#B5B5B5;}
+
+    /* 하단 고정 버튼 영역 */
+    .btn-fixed-bottom{position:fixed;left:0;right:0;bottom:0;padding:1.2rem 2rem 2.4rem;background:var(--primaryWhite);box-shadow:0 -.4rem 1.2rem rgba(0,0,0,.04);}
+    .btn-fixed-bottom .btn-lg{width:100%;}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header id="header">
+      <div class="mobile sub-header">
+        <button type="button" class="btn-back" aria-label="뒤로가기"></button>
+        <h1 class="title-show">대출신청서 작성</h1>
+      </div>
+      <div class="progress-bar" aria-hidden="true">
+        <div class="progress-fill"></div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="form-contents">
+
+        <div class="step-indicator">
+          <span class="step-now">2</span>
+          <span class="step-total">/ 5</span>
+          <span class="step-name">대출신청서 작성</span>
+        </div>
+
+        <h2 class="form-title">얼마를 <span class="fc-blue">신청</span>하시겠어요?</h2>
+
+        <div class="input-con focus">
+          <label class="input-label" for="loanAmount">대출신청금액</label>
+          <div class="input-box">
+            <input type="text" id="loanAmount" class="input-default" inputmode="numeric" value="30,000,000">
+            <span class="input-unit">원</span>
+            <button type="button" class="btn-clear" aria-label="입력 지우기">✕</button>
+          </div>
+          <div class="amount-chips">
+            <button type="button">+100만</button>
+            <button type="button">+500만</button>
+            <button type="button">+1,000만</button>
+            <button type="button">전액</button>
+          </div>
+        </div>
+
+        <div class="input-con">
+          <label class="input-label" for="loanPurpose">대출 목적</label>
+          <div class="input-box type-select" role="button" tabindex="0">
+            <input type="text" id="loanPurpose" class="input-default" placeholder="선택해주세요" readonly value="생활안정자금">
+          </div>
+        </div>
+
+        <div class="input-con">
+          <label class="input-label" for="loanPeriod">상환 기간</label>
+          <div class="input-box type-select" role="button" tabindex="0">
+            <input type="text" id="loanPeriod" class="input-default" placeholder="선택해주세요" readonly value="36개월">
+          </div>
+        </div>
+
+        <div class="info-box">
+          <p class="info-tit">신청 전 확인하세요</p>
+          <ul>
+            <li>최소 100만원부터 최대 1억원까지 신청할 수 있어요.</li>
+            <li>입력하신 금액은 심사 결과에 따라 조정될 수 있어요.</li>
+            <li>신청 내용은 다음 단계에서 다시 확인할 수 있어요.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="btn-fixed-bottom">
+        <button type="button" class="btn-lg btn-primary">다음</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/jquery/jquery-3.6.1.min.js"></script>
+  <script src="../assets/js/jquery/jquery.tmpl.js"></script>
+  <script src="../assets/js/cmm/js.cookie.min.js"></script>
+  <script src="../assets/js/cmm/jbwrcUtil.js"></script>
+  <script src="../assets/js/cmm/jbwrcFnc.js"></script>
+  <script src="../assets/js/cmm/jbwrcEvent.js"></script>
+  <script src="../assets/js/ui/jb-layout.js"></script>
+  <script src="../assets/js/ui/jb-ui.js"></script>
+  <script>
+    // 시안 동작용 최소 스크립트 (운영 공통 스크립트와 충돌하지 않는 범위)
+    (function () {
+      var box = document.querySelector('.input-con.focus .input-box');
+      var input = document.getElementById('loanAmount');
+      var clear = document.querySelector('.btn-clear');
+      if (clear && input) {
+        clear.addEventListener('click', function () {
+          input.value = '';
+          input.focus();
+        });
+      }
+      // 금액 입력 시 천단위 콤마
+      if (input) {
+        input.addEventListener('input', function () {
+          var num = this.value.replace(/[^0-9]/g, '');
+          this.value = num ? Number(num).toLocaleString('ko-KR') : '';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
