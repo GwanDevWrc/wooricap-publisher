@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>대출금 사용내역 및 증빙작성 - 우리캐피탈</title>
+  <link rel="stylesheet" href="../assets/css/jb-common.css">
+  <link rel="stylesheet" href="../assets/css/jb-style.css">
+  <style>
+    /* 시안 전용 보강 스타일 (디자인 시스템에 매칭되는 패턴이 없는 부분만 최소 추가) */
+
+    /* 상단 진행률 라인 */
+    .progress-bar{height:.3rem;background:var(--borderColor);}
+    .progress-bar .progress-fill{height:100%;width:60%;background:var(--primaryBlue);transition:width .3s ease;}
+
+    /* 본문 영역 - 하단 고정 버튼만큼 여백 */
+    .form-contents{padding:2.4rem 2rem 14rem;}
+
+    /* 단계 표시 */
+    .step-indicator{display:flex;align-items:center;gap:.6rem;margin-bottom:1.2rem;}
+    .step-indicator .step-now{font-size:1.3rem;font-weight:700;color:var(--primaryBlue);}
+    .step-indicator .step-total,
+    .step-indicator .step-name{font-size:1.3rem;font-weight:500;color:var(--subTxt);}
+
+    /* 큰 헤딩 + 서브 설명 */
+    .form-title{font-size:2.4rem;font-weight:600;line-height:3.2rem;letter-spacing:-0.02em;color:var(--primaryBlack);}
+    .form-title .fc-blue{color:var(--primaryBlue);}
+    .form-desc{margin-top:1rem;font-size:1.4rem;font-weight:400;line-height:2.2rem;color:var(--subTxt);}
+
+    /* 사용내역 합계 요약 카드 */
+    .sum-box{margin-top:2.8rem;padding:1.8rem 2rem;background:var(--primaryBlue);border-radius:1.4rem;color:#fff;}
+    .sum-box .sum-label{font-size:1.3rem;font-weight:500;opacity:.85;}
+    .sum-box .sum-amount{margin-top:.4rem;font-size:2.6rem;font-weight:700;letter-spacing:-0.02em;}
+    .sum-box .sum-amount .won{font-size:1.8rem;font-weight:600;margin-left:.2rem;}
+    .sum-box .sum-help{margin-top:.8rem;font-size:1.2rem;font-weight:400;opacity:.8;}
+    .sum-box.over{background:var(--primaryRed);}
+
+    /* 섹션 제목 */
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin:3.6rem 0 1.4rem;}
+    .section-title h3{font-size:1.7rem;font-weight:700;color:var(--primaryBlack);letter-spacing:-0.025em;}
+    .section-title .count{font-size:1.3rem;font-weight:600;color:var(--subTxt);}
+
+    /* 사용내역 항목 카드 */
+    .use-item{padding:1.8rem 1.6rem;border:.1rem solid #EEF1F5;border-radius:1.2rem;background:#fff;}
+    .use-item + .use-item{margin-top:1rem;}
+    .use-item-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;}
+    .use-item-head .idx{display:inline-flex;align-items:center;justify-content:center;width:2.2rem;height:2.2rem;border-radius:50%;background:#EAF1FE;color:var(--primaryBlue);font-size:1.2rem;font-weight:700;}
+    .use-item-head .btn-del{border:0;background:none;padding:.4rem;font-size:1.3rem;color:#9aa3ad;cursor:pointer;}
+
+    /* 항목 내부 입력 행 */
+    .field{margin-top:1.4rem;}
+    .field:first-child{margin-top:0;}
+    .field-label{display:block;font-size:1.2rem;font-weight:600;color:var(--subTxt);margin-bottom:.6rem;}
+    .field-input{position:relative;display:flex;align-items:center;border-bottom:.1rem solid var(--borderColor);padding-bottom:.8rem;}
+    .field-input input{flex:1;border:0;outline:0;background:transparent;font-size:1.6rem;font-weight:600;color:var(--primaryBlack);padding:0;}
+    .field-input input::placeholder{color:#D9D9D9;font-weight:500;}
+    .field-input .unit{font-size:1.4rem;font-weight:600;color:var(--primaryBlack);margin-left:.4rem;}
+    .field-input.type-select::after{content:'';position:absolute;right:.2rem;top:50%;width:.8rem;height:.8rem;border-right:.2rem solid #B5B5B5;border-bottom:.2rem solid #B5B5B5;transform:translateY(-70%) rotate(45deg);}
+    .field-input.type-select input{pointer-events:none;}
+
+    /* 증빙 첨부 영역 (attach-buttons 컴포넌트 톤) */
+    .use-item .attach-row{margin-top:1.6rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-top:1.4rem;border-top:.1rem dashed #EEF1F5;}
+    .attach-state{display:flex;align-items:center;gap:.6rem;font-size:1.3rem;color:#3a444f;}
+    .attach-state .cap{padding:.3rem .8rem;border-radius:10rem;background:#eaf1fe;color:var(--primaryBlue);font-size:1.1rem;font-weight:700;}
+    .attach-state .cap.empty{background:#F2F3F5;color:#9aa3ad;}
+    .attach-state .fn{font-size:1.3rem;color:var(--primaryBlack);}
+    .btn-pick{display:inline-flex;align-items:center;gap:.4rem;font-size:1.2rem;font-weight:600;color:var(--primaryBlue);background:#f3f7fe;border:.1rem solid #cfdcf3;border-radius:.8rem;padding:.7rem 1.1rem;cursor:pointer;}
+    .btn-pick .ico{display:inline-block;width:1.3rem;height:1.3rem;background-repeat:no-repeat;background-position:center;background-size:contain;
+      background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%230565F0' stroke-width='2.2' stroke-linecap='round'><path d='M8 3v10M3 8h10'/></svg>");}
+
+    /* 항목 추가 버튼 */
+    .btn-add-item{width:100%;margin-top:1.2rem;padding:1.4rem;border:.1rem dashed #C9D3DF;border-radius:1.2rem;background:#fff;color:var(--primaryBlue);font-size:1.4rem;font-weight:600;cursor:pointer;}
+
+    /* 안내 박스 */
+    .info-box{margin-top:3.2rem;padding:1.6rem 1.8rem;background:#F5F7FA;border-radius:1.2rem;}
+    .info-box .info-tit{display:flex;align-items:center;gap:.6rem;font-size:1.4rem;font-weight:600;color:var(--primaryBlack);}
+    .info-box .info-tit::before{content:'i';display:inline-flex;align-items:center;justify-content:center;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--primaryBlue);color:#fff;font-size:1.2rem;font-weight:700;font-style:italic;}
+    .info-box ul{margin:1rem 0 0;padding:0;list-style:none;}
+    .info-box li{position:relative;padding-left:1rem;font-size:1.3rem;font-weight:400;line-height:2rem;color:var(--subTxt);}
+    .info-box li::before{content:'';position:absolute;left:.1rem;top:.9rem;width:.3rem;height:.3rem;border-radius:50%;background:#B5B5B5;}
+
+    /* 하단 고정 버튼 영역 */
+    .btn-fixed-bottom{position:fixed;left:0;right:0;bottom:0;padding:1.2rem 2rem 2.4rem;background:var(--primaryWhite);box-shadow:0 -.4rem 1.2rem rgba(0,0,0,.04);}
+    .btn-fixed-bottom .btn-lg{width:100%;}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header id="header">
+      <div class="mobile sub-header">
+        <button type="button" class="btn-back" aria-label="뒤로가기"></button>
+        <h1 class="title-show">대출금 사용내역 작성</h1>
+      </div>
+      <div class="progress-bar" aria-hidden="true">
+        <div class="progress-fill"></div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="form-contents">
+
+        <div class="step-indicator">
+          <span class="step-now">3</span>
+          <span class="step-total">/ 5</span>
+          <span class="step-name">사용내역 및 증빙</span>
+        </div>
+
+        <h2 class="form-title">대출금을 <span class="fc-blue">어디에</span> 쓰셨나요?</h2>
+        <p class="form-desc">실제 사용처와 금액을 입력하고, 항목별 증빙자료를 첨부해주세요.</p>
+
+        <div class="sum-box" id="sumBox">
+          <p class="sum-label">대출 실행금액 30,000,000원 중</p>
+          <p class="sum-amount"><span id="sumAmount">22,000,000</span><span class="won">원</span></p>
+          <p class="sum-help">잔여 입력 가능 금액 <strong id="sumRemain">8,000,000원</strong></p>
+        </div>
+
+        <div class="section-title">
+          <h3>사용내역</h3>
+          <span class="count"><strong id="itemCount">2</strong>건 작성됨</span>
+        </div>
+
+        <div id="itemList">
+          <!-- 항목 1 -->
+          <div class="use-item">
+            <div class="use-item-head">
+              <span class="idx">1</span>
+              <button type="button" class="btn-del" aria-label="항목 삭제">삭제</button>
+            </div>
+            <div class="field">
+              <label class="field-label">사용 구분</label>
+              <div class="field-input type-select" role="button" tabindex="0">
+                <input type="text" value="자동차 구입" readonly>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">사용 금액</label>
+              <div class="field-input">
+                <input type="text" inputmode="numeric" value="18,000,000">
+                <span class="unit">원</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">사용처 / 메모</label>
+              <div class="field-input">
+                <input type="text" value="OO자동차 매매계약">
+              </div>
+            </div>
+            <div class="attach-row">
+              <div class="attach-state">
+                <span class="cap">첨부완료</span>
+                <span class="fn">계약서_스캔.pdf</span>
+              </div>
+              <button type="button" class="btn-pick"><span class="ico" aria-hidden="true"></span>변경</button>
+            </div>
+          </div>
+
+          <!-- 항목 2 -->
+          <div class="use-item">
+            <div class="use-item-head">
+              <span class="idx">2</span>
+              <button type="button" class="btn-del" aria-label="항목 삭제">삭제</button>
+            </div>
+            <div class="field">
+              <label class="field-label">사용 구분</label>
+              <div class="field-input type-select" role="button" tabindex="0">
+                <input type="text" value="생활안정자금" readonly>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">사용 금액</label>
+              <div class="field-input">
+                <input type="text" inputmode="numeric" value="4,000,000">
+                <span class="unit">원</span>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-label">사용처 / 메모</label>
+              <div class="field-input">
+                <input type="text" placeholder="예) 의료비, 교육비 등">
+              </div>
+            </div>
+            <div class="attach-row">
+              <div class="attach-state">
+                <span class="cap empty">미첨부</span>
+                <span class="fn" style="color:#9aa3ad;">증빙자료를 첨부해주세요</span>
+              </div>
+              <button type="button" class="btn-pick"><span class="ico" aria-hidden="true"></span>첨부</button>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-add-item" id="addItem">+ 사용내역 추가</button>
+
+        <div class="info-box">
+          <p class="info-tit">증빙자료 안내</p>
+          <ul>
+            <li>세금계산서, 영수증, 계약서, 이체확인증 등을 첨부할 수 있어요.</li>
+            <li>사용금액 합계는 대출 실행금액을 초과할 수 없어요.</li>
+            <li>증빙이 어려운 항목은 사용처에 사유를 메모해주세요.</li>
+            <li>파일은 JPG, PNG, PDF (건당 10MB 이하)만 첨부할 수 있어요.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="btn-fixed-bottom">
+        <button type="button" class="btn-lg btn-primary">작성 완료</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/jquery/jquery-3.6.1.min.js"></script>
+  <script src="../assets/js/jquery/jquery.tmpl.js"></script>
+  <script src="../assets/js/cmm/js.cookie.min.js"></script>
+  <script src="../assets/js/cmm/jbwrcUtil.js"></script>
+  <script src="../assets/js/cmm/jbwrcFnc.js"></script>
+  <script src="../assets/js/cmm/jbwrcEvent.js"></script>
+  <script src="../assets/js/ui/jb-layout.js"></script>
+  <script src="../assets/js/ui/jb-ui.js"></script>
+  <script>
+    // 시안 동작용 최소 스크립트 (합계 재계산 + 항목 추가/삭제)
+    (function () {
+      var TOTAL = 30000000; // 대출 실행금액
+      var list = document.getElementById('itemList');
+      var addBtn = document.getElementById('addItem');
+
+      function won(n){ return Number(n).toLocaleString('ko-KR'); }
+
+      function recalc(){
+        var sum = 0;
+        list.querySelectorAll('.field-input input[inputmode="numeric"]').forEach(function(el){
+          sum += Number(el.value.replace(/[^0-9]/g, '') || 0);
+        });
+        document.getElementById('sumAmount').textContent = won(sum);
+        var remain = TOTAL - sum;
+        document.getElementById('sumRemain').textContent = won(Math.abs(remain)) + '원';
+        document.getElementById('sumBox').classList.toggle('over', remain < 0);
+        document.getElementById('itemCount').textContent = list.querySelectorAll('.use-item').length;
+        // 재정렬: 인덱스 번호
+        list.querySelectorAll('.use-item .idx').forEach(function(el, i){ el.textContent = i + 1; });
+      }
+
+      // 금액 입력 천단위 콤마 + 합계 재계산
+      list.addEventListener('input', function (e) {
+        if (e.target.matches('input[inputmode="numeric"]')) {
+          var num = e.target.value.replace(/[^0-9]/g, '');
+          e.target.value = num ? won(num) : '';
+          recalc();
+        }
+      });
+
+      // 항목 삭제
+      list.addEventListener('click', function (e) {
+        if (e.target.classList.contains('btn-del')) {
+          var items = list.querySelectorAll('.use-item');
+          if (items.length > 1) { e.target.closest('.use-item').remove(); recalc(); }
+        }
+      });
+
+      // 항목 추가
+      addBtn.addEventListener('click', function () {
+        var idx = list.querySelectorAll('.use-item').length + 1;
+        var div = document.createElement('div');
+        div.className = 'use-item';
+        div.innerHTML =
+          '<div class="use-item-head"><span class="idx">' + idx + '</span>' +
+          '<button type="button" class="btn-del" aria-label="항목 삭제">삭제</button></div>' +
+          '<div class="field"><label class="field-label">사용 구분</label>' +
+          '<div class="field-input type-select" role="button" tabindex="0"><input type="text" placeholder="선택해주세요" readonly></div></div>' +
+          '<div class="field"><label class="field-label">사용 금액</label>' +
+          '<div class="field-input"><input type="text" inputmode="numeric" placeholder="0"><span class="unit">원</span></div></div>' +
+          '<div class="field"><label class="field-label">사용처 / 메모</label>' +
+          '<div class="field-input"><input type="text" placeholder="예) 의료비, 교육비 등"></div></div>' +
+          '<div class="attach-row"><div class="attach-state"><span class="cap empty">미첨부</span>' +
+          '<span class="fn" style="color:#9aa3ad;">증빙자료를 첨부해주세요</span></div>' +
+          '<button type="button" class="btn-pick"><span class="ico" aria-hidden="true"></span>첨부</button></div>';
+        list.appendChild(div);
+        recalc();
+      });
+
+      recalc();
+    })();
+  </script>
+</body>
+</html>
