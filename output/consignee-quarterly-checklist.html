@@ -71,6 +71,12 @@
     .btn-fixed-bottom .btn-lg{width:100%;}
     .btn-lg.btn-primary.disabled,
     .btn-lg.btn-primary:disabled{background:#DFE7EC;color:#fff;pointer-events:none;}
+
+    /* 부적정 안내 팝업 (디자인 시스템 .layerpop-wrap.type-alert 재사용 + 최소 보강) */
+    .layerpop-wrap.type-alert .layerpop-contents{padding-top:3.2rem;text-align:center;}
+    .layerpop-wrap.type-alert .alert-tit{font-size:1.8rem;font-weight:700;line-height:2.6rem;color:var(--primaryBlack);letter-spacing:-0.02em;}
+    .layerpop-wrap.type-alert .alert-msg{margin-top:1.2rem;font-size:1.4rem;font-weight:400;line-height:2.1rem;color:var(--subTxt);white-space:pre-line;}
+    .layerpop-wrap.type-alert .layerpop-footer .btn-lg{width:100%;border-radius:0;}
   </style>
 </head>
 <body>
@@ -135,6 +141,19 @@
     </main>
   </div>
 
+  <!-- 부적정 선택 안내 팝업 -->
+  <div class="layerpop-wrap type-alert" id="badAlert" role="dialog" aria-modal="true" aria-labelledby="badAlertTit">
+    <div class="layerpop">
+      <div class="layerpop-contents">
+        <p class="alert-tit" id="badAlertTit">부적정 항목 확인</p>
+        <p class="alert-msg" id="badAlertMsg"></p>
+      </div>
+      <div class="layerpop-footer">
+        <button type="button" class="btn-lg btn-primary" id="badAlertOk">확인</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../assets/js/jquery/jquery-3.6.1.min.js"></script>
   <script src="../assets/js/jquery/jquery.tmpl.js"></script>
   <script src="../assets/js/cmm/js.cookie.min.js"></script>
@@ -166,6 +185,34 @@
       var progressEl = document.getElementById('progressFill');
       var submitBtn = document.getElementById('submitBtn');
       var TOTAL = QUESTIONS.length;
+
+      // 부적정 안내 팝업 (디자인 시스템 .layerpop-wrap.type-alert)
+      var alertEl = document.getElementById('badAlert');
+      var alertMsgEl = document.getElementById('badAlertMsg');
+      var alertOkEl = document.getElementById('badAlertOk');
+      var pendingNote = null;
+
+      function openAlert(msg, noteEl) {
+        alertMsgEl.textContent = msg;
+        pendingNote = noteEl || null;
+        alertEl.classList.add('show');
+        alertEl.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow');
+        alertOkEl.focus();
+      }
+      function closeAlert() {
+        alertEl.classList.remove('show');
+        alertEl.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('overflow');
+        if (pendingNote) { pendingNote.focus(); pendingNote = null; }
+      }
+      alertOkEl.addEventListener('click', closeAlert);
+      // 딤 영역 클릭 시 닫기
+      alertEl.addEventListener('click', function (e) { if (e.target === alertEl) closeAlert(); });
+      // ESC 키로 닫기
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && alertEl.classList.contains('show')) closeAlert();
+      });
 
       // 문항 카드 렌더링
       var html = '';
@@ -220,8 +267,7 @@
 
         if (isBad) {
           var num = item.getAttribute('data-idx');
-          alert(num + '번 항목이 \'부적정\'으로 선택되었습니다.\n미흡사항과 개선계획을 비고란에 입력해주세요.');
-          note.querySelector('textarea').focus();
+          openAlert(num + '번 항목이 \'부적정\'으로 선택되었습니다.\n미흡사항과 개선계획을 비고란에 입력해주세요.', note.querySelector('textarea'));
         }
 
         refresh();
