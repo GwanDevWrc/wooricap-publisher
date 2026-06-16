@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>개인(신용)정보 처리 수탁사 분기점검표 - 우리캐피탈</title>
+  <link rel="stylesheet" href="../assets/css/jb-common.css">
+  <link rel="stylesheet" href="../assets/css/jb-style.css">
+  <style>
+    /* 시안 전용 보강 스타일 (디자인 시스템에 매칭되는 패턴이 없는 부분만 최소 추가) */
+
+    /* 상단 진행률 라인 */
+    .progress-bar{height:.3rem;background:var(--borderColor);}
+    .progress-bar .progress-fill{height:100%;width:0;background:var(--primaryBlue);transition:width .3s ease;}
+
+    /* 본문 영역 - 하단 고정 버튼만큼 여백 */
+    .form-contents{padding:2.4rem 2rem 14rem;}
+
+    /* 큰 헤딩 + 서브 설명 */
+    .form-title{font-size:2.4rem;font-weight:600;line-height:3.2rem;letter-spacing:-0.02em;color:var(--primaryBlack);}
+    .form-title .fc-blue{color:var(--primaryBlue);}
+    .form-desc{margin-top:1rem;font-size:1.4rem;font-weight:400;line-height:2.2rem;color:var(--subTxt);}
+
+    /* 점검 개요 카드 (수탁사명 / 점검분기 / 점검자) */
+    .summary-card{margin-top:2.4rem;padding:1.8rem 2rem;background:#F5F7FA;border-radius:1.4rem;}
+    .summary-card dl{display:flex;align-items:center;}
+    .summary-card dl + dl{margin-top:1.2rem;}
+    .summary-card dt{flex:0 0 8rem;font-size:1.3rem;font-weight:500;color:var(--subTxt);}
+    .summary-card dd{flex:1;font-size:1.5rem;font-weight:600;color:var(--primaryBlack);text-align:right;}
+
+    /* 진행 현황 바 */
+    .check-status{display:flex;align-items:center;justify-content:space-between;margin:3.2rem 0 1.4rem;}
+    .check-status h3{font-size:1.7rem;font-weight:700;color:var(--primaryBlack);letter-spacing:-0.025em;}
+    .check-status .count{font-size:1.3rem;font-weight:600;color:var(--subTxt);}
+    .check-status .count strong{color:var(--primaryBlue);}
+
+    /* 문항 카드 */
+    .check-item{padding:1.8rem 1.6rem;border:.1rem solid #EEF1F5;border-radius:1.2rem;background:#fff;}
+    .check-item + .check-item{margin-top:1rem;}
+    .check-item.answered{border-color:#CFDCF3;background:#FBFCFE;}
+    .check-item-q{display:flex;gap:.8rem;}
+    .check-item-q .num{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:2.2rem;height:2.2rem;padding:0 .6rem;border-radius:1.1rem;background:#EAF1FE;color:var(--primaryBlue);font-size:1.2rem;font-weight:700;}
+    .check-item-q .q-txt{flex:1;font-size:1.5rem;font-weight:600;line-height:2.2rem;color:var(--primaryBlack);}
+
+    /* 적정 / 부적정 / 해당없음 선택 */
+    .answer-group{display:flex;gap:.8rem;margin-top:1.4rem;}
+    .answer-group .opt{flex:1;}
+    .answer-group .opt input{position:absolute;opacity:0;width:0;height:0;}
+    .answer-group .opt label{display:flex;align-items:center;justify-content:center;height:4rem;border:.1rem solid var(--borderColor);border-radius:.8rem;background:#fff;font-size:1.4rem;font-weight:600;color:var(--subTxt);cursor:pointer;transition:all .15s ease;}
+    .answer-group .opt input:checked + label{border-color:var(--primaryBlue);background:#F3F7FE;color:var(--primaryBlue);}
+    .answer-group .opt.type-bad input:checked + label{border-color:var(--primaryRed);background:#FDF2F1;color:var(--primaryRed);}
+
+    /* 부적정 시 노출되는 비고 입력 */
+    .item-note{margin-top:1.2rem;display:none;}
+    .item-note.show{display:block;}
+    .item-note .field-label{display:block;font-size:1.2rem;font-weight:600;color:var(--subTxt);margin-bottom:.6rem;}
+    .item-note textarea{width:100%;min-height:6.4rem;border:.1rem solid var(--borderColor);border-radius:.8rem;padding:1rem 1.2rem;font-size:1.4rem;line-height:2rem;color:var(--primaryBlack);resize:none;outline:0;font-family:inherit;}
+    .item-note textarea::placeholder{color:#C9CDD2;}
+    .item-note textarea:focus{border-color:var(--primaryBlue);}
+
+    /* 안내 박스 */
+    .info-box{margin-top:3.2rem;padding:1.6rem 1.8rem;background:#F5F7FA;border-radius:1.2rem;}
+    .info-box .info-tit{display:flex;align-items:center;gap:.6rem;font-size:1.4rem;font-weight:600;color:var(--primaryBlack);}
+    .info-box .info-tit::before{content:'i';display:inline-flex;align-items:center;justify-content:center;width:1.8rem;height:1.8rem;border-radius:50%;background:var(--primaryBlue);color:#fff;font-size:1.2rem;font-weight:700;font-style:italic;}
+    .info-box ul{margin:1rem 0 0;padding:0;list-style:none;}
+    .info-box li{position:relative;padding-left:1rem;font-size:1.3rem;font-weight:400;line-height:2rem;color:var(--subTxt);}
+    .info-box li::before{content:'';position:absolute;left:.1rem;top:.9rem;width:.3rem;height:.3rem;border-radius:50%;background:#B5B5B5;}
+
+    /* 하단 고정 버튼 영역 */
+    .btn-fixed-bottom{position:fixed;left:0;right:0;bottom:0;padding:1.2rem 2rem 2.4rem;background:var(--primaryWhite);box-shadow:0 -.4rem 1.2rem rgba(0,0,0,.04);}
+    .btn-fixed-bottom .btn-lg{width:100%;}
+    .btn-lg.btn-primary.disabled,
+    .btn-lg.btn-primary:disabled{background:#DFE7EC;color:#fff;pointer-events:none;}
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header id="header">
+      <div class="mobile sub-header">
+        <button type="button" class="btn-back" aria-label="뒤로가기"></button>
+        <h1 class="title-show">수탁사 분기점검표</h1>
+      </div>
+      <div class="progress-bar" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="form-contents">
+
+        <h2 class="form-title">개인(신용)정보 처리<br><span class="fc-blue">수탁사 분기점검표</span></h2>
+        <p class="form-desc">위탁한 개인(신용)정보 처리 업무가 안전하게 관리되고 있는지 11개 항목을 점검해주세요.</p>
+
+        <div class="summary-card">
+          <dl>
+            <dt>수탁사명</dt>
+            <dd>(주)○○데이터서비스</dd>
+          </dl>
+          <dl>
+            <dt>점검분기</dt>
+            <dd>2026년 2분기</dd>
+          </dl>
+          <dl>
+            <dt>점검자</dt>
+            <dd>홍길동 (정보보호팀)</dd>
+          </dl>
+        </div>
+
+        <div class="check-status">
+          <h3>점검 항목</h3>
+          <span class="count"><strong id="answeredCount">0</strong> / 11 완료</span>
+        </div>
+
+        <form id="checkForm">
+          <div id="checkList">
+            <!-- 문항은 JS로 렌더링 -->
+          </div>
+        </form>
+
+        <div class="info-box">
+          <p class="info-tit">점검 안내</p>
+          <ul>
+            <li>각 항목은 <strong>적정 · 부적정 · 해당없음</strong> 중 하나를 선택해주세요.</li>
+            <li>‘부적정’ 선택 시 미흡사항과 개선계획을 비고란에 입력해주세요.</li>
+            <li>11개 항목을 모두 선택해야 제출할 수 있어요.</li>
+            <li>제출된 점검표는 정보보호팀에서 검토 후 보관됩니다.</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="btn-fixed-bottom">
+        <button type="button" class="btn-lg btn-primary disabled" id="submitBtn" disabled>점검표 제출 (0/11)</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="../assets/js/jquery/jquery-3.6.1.min.js"></script>
+  <script src="../assets/js/jquery/jquery.tmpl.js"></script>
+  <script src="../assets/js/cmm/js.cookie.min.js"></script>
+  <script src="../assets/js/cmm/jbwrcUtil.js"></script>
+  <script src="../assets/js/cmm/jbwrcFnc.js"></script>
+  <script src="../assets/js/cmm/jbwrcEvent.js"></script>
+  <script src="../assets/js/ui/jb-layout.js"></script>
+  <script src="../assets/js/ui/jb-ui.js"></script>
+  <script>
+    // 시안 동작용 최소 스크립트 (문항 렌더링 + 응답 현황 집계)
+    (function () {
+      // 개인(신용)정보 처리 수탁사 분기점검 11개 문항
+      var QUESTIONS = [
+        '개인(신용)정보 처리 위탁계약서를 체결하고 보관하고 있나요?',
+        '위탁받은 업무 범위 내에서만 개인(신용)정보를 처리하고 있나요?',
+        '개인(신용)정보 보호책임자(또는 담당자)를 지정하여 운영하고 있나요?',
+        '개인(신용)정보 취급자의 권한 부여·변경·말소 내역을 기록·관리하고 있나요?',
+        '개인(신용)정보처리시스템 접근권한을 업무상 필요 범위로 차등 부여하고 있나요?',
+        '개인(신용)정보처리시스템의 접속기록을 보관하고 정기적으로 점검하고 있나요?',
+        '개인(신용)정보를 안전한 알고리즘으로 암호화하여 저장·전송하고 있나요?',
+        '악성프로그램 방지를 위한 보안프로그램(백신 등)을 설치하고 최신 상태로 갱신하고 있나요?',
+        '개인(신용)정보 취급자를 대상으로 정기 보안교육을 실시하고 있나요?',
+        '보유기간이 경과한 개인(신용)정보의 파기 절차와 기록을 관리하고 있나요?',
+        '재위탁이 필요한 경우 위탁사(우리캐피탈)의 사전 동의를 받고 있나요?'
+      ];
+
+      var listEl = document.getElementById('checkList');
+      var answeredEl = document.getElementById('answeredCount');
+      var progressEl = document.getElementById('progressFill');
+      var submitBtn = document.getElementById('submitBtn');
+      var TOTAL = QUESTIONS.length;
+
+      // 문항 카드 렌더링
+      var html = '';
+      QUESTIONS.forEach(function (q, i) {
+        var n = i + 1;
+        html +=
+          '<div class="check-item" data-idx="' + n + '">' +
+            '<div class="check-item-q">' +
+              '<span class="num">' + n + '</span>' +
+              '<p class="q-txt">' + q + '</p>' +
+            '</div>' +
+            '<div class="answer-group">' +
+              '<span class="opt"><input type="radio" id="q' + n + '_ok" name="q' + n + '" value="적정">' +
+                '<label for="q' + n + '_ok">적정</label></span>' +
+              '<span class="opt type-bad"><input type="radio" id="q' + n + '_bad" name="q' + n + '" value="부적정">' +
+                '<label for="q' + n + '_bad">부적정</label></span>' +
+              '<span class="opt"><input type="radio" id="q' + n + '_na" name="q' + n + '" value="해당없음">' +
+                '<label for="q' + n + '_na">해당없음</label></span>' +
+            '</div>' +
+            '<div class="item-note">' +
+              '<label class="field-label" for="note' + n + '">미흡사항 및 개선계획</label>' +
+              '<textarea id="note' + n + '" placeholder="부적정 사유와 개선계획을 입력해주세요."></textarea>' +
+            '</div>' +
+          '</div>';
+      });
+      listEl.innerHTML = html;
+
+      function refresh() {
+        var done = 0;
+        for (var n = 1; n <= TOTAL; n++) {
+          if (document.querySelector('input[name="q' + n + '"]:checked')) done++;
+        }
+        answeredEl.textContent = done;
+        progressEl.style.width = (done / TOTAL * 100) + '%';
+
+        var allDone = done === TOTAL;
+        submitBtn.textContent = allDone ? '점검표 제출' : '점검표 제출 (' + done + '/' + TOTAL + ')';
+        submitBtn.disabled = !allDone;
+        submitBtn.classList.toggle('disabled', !allDone);
+      }
+
+      // 응답 변경 처리
+      listEl.addEventListener('change', function (e) {
+        if (e.target.type !== 'radio') return;
+        var item = e.target.closest('.check-item');
+        item.classList.add('answered');
+
+        // 부적정일 때만 비고 입력 노출
+        var note = item.querySelector('.item-note');
+        note.classList.toggle('show', e.target.value === '부적정');
+
+        refresh();
+      });
+
+      submitBtn.addEventListener('click', function () {
+        if (submitBtn.disabled) return;
+        alert('분기점검표가 제출되었습니다.');
+      });
+
+      refresh();
+    })();
+  </script>
+</body>
+</html>
