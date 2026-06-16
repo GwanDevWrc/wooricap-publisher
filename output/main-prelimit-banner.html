@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>메인 사전한도 안내 배너 - 우리캐피탈</title>
+  <link rel="stylesheet" href="../assets/css/jb-common.css">
+  <link rel="stylesheet" href="../assets/css/jb-style.css">
+  <link rel="stylesheet" href="../assets/css/style-main.css">
+  <link rel="stylesheet" href="../assets/css/swiper-bundle.min.css">
+  <style>
+    /* =========================================================
+       사전한도 안내 배너 (특정 고객 타겟) — .product-card 신규 변형
+       기존 .main-sec .product-card / .txt-con / .btn-link 골격을 재사용하고,
+       한도금액·금리 강조에 필요한 타이포만 .txt-con.type-limit 로 추가
+       ========================================================= */
+    .main-sec .product-card.type-limit-card{overflow:hidden;}
+    /* 우측 데코 원형 (일러스트 대체) */
+    .main-sec .product-card.type-limit-card::after{content:'';position:absolute;z-index:0;right:-7rem;bottom:-9rem;width:30rem;height:30rem;border-radius:50%;background:rgba(255,255,255,.08);}
+    .main-sec .product-card.type-limit-card::before{content:'';position:absolute;z-index:0;right:6rem;top:-6rem;width:14rem;height:14rem;border-radius:50%;background:rgba(255,255,255,.06);}
+
+    .main-sec .product-card .txt-con.type-limit{top:5.6rem;left:10rem;width:50rem;height:auto;}
+    .main-sec .product-card .txt-con.type-limit .greet{font-family:'hgg';font-size:2.4rem;font-weight:500;opacity:.92;letter-spacing:-0.5px;}
+    .main-sec .product-card .txt-con.type-limit .greet .ct-name{font-weight:800;}
+    .main-sec .product-card .txt-con.type-limit .limit-label{margin-top:2.6rem;font-size:2.1rem;font-weight:500;color:#CFE0FB;}
+    .main-sec .product-card .txt-con.type-limit .limit-amount{display:flex;align-items:flex-end;margin-top:.8rem;font-family:'hgg';line-height:1;}
+    .main-sec .product-card .txt-con.type-limit .limit-amount .num{font-size:5.8rem;font-weight:800;letter-spacing:1px;}
+    .main-sec .product-card .txt-con.type-limit .limit-amount .unit{margin-left:.8rem;padding-bottom:.8rem;font-size:2.6rem;font-weight:600;}
+    .main-sec .product-card .txt-con.type-limit .limit-rate{margin-top:1.8rem;font-size:2rem;font-weight:500;color:#E5EEFC;}
+    .main-sec .product-card .txt-con.type-limit .limit-rate strong{margin-left:.4rem;font-weight:800;color:#FFD83B;}
+    .main-sec .product-card .txt-con.type-limit .btn-link{margin-top:3.4rem;}
+
+    /* 모바일 (메인 mo 레이아웃 기준) */
+    @media (max-width:768px){
+      .main-sec .product-card .txt-con.type-limit{top:3.6rem;left:3rem;width:calc(100% - 6rem);height:auto;}
+      .main-sec .product-card .txt-con.type-limit .greet{font-size:1.7rem;}
+      .main-sec .product-card .txt-con.type-limit .limit-label{margin-top:1.6rem;font-size:1.5rem;}
+      .main-sec .product-card .txt-con.type-limit .limit-amount{margin-top:.6rem;}
+      .main-sec .product-card .txt-con.type-limit .limit-amount .num{font-size:4rem;}
+      .main-sec .product-card .txt-con.type-limit .limit-amount .unit{font-size:1.9rem;padding-bottom:.5rem;margin-left:.5rem;}
+      .main-sec .product-card .txt-con.type-limit .limit-rate{margin-top:1.3rem;font-size:1.5rem;}
+      .main-sec .product-card .txt-con.type-limit .btn-link{margin-top:2.2rem;}
+      .main-sec .product-card.type-limit-card::after{right:-5rem;bottom:-6rem;width:18rem;height:18rem;}
+      .main-sec .product-card.type-limit-card::before{right:3rem;top:-4rem;width:9rem;height:9rem;}
+    }
+
+    /* --- 미리보기 전용(실서비스 아님): swiper 미초기화 시 첫 슬라이드만 노출 --- */
+    body{background:#F2F5FA;}
+    .demo-pad{padding:3rem 0;}
+    .demo-note{max-width:88.2rem;margin:0 auto 1.6rem;padding:0 2rem;font-size:1.3rem;color:#767676;}
+    .main-card-list:not(.swiper-initialized) .swiper-wrapper{display:block;}
+    .main-card-list:not(.swiper-initialized) .swiper-slide{opacity:1;}
+    .main-card-list:not(.swiper-initialized) .swiper-slide + .swiper-slide{display:none;}
+  </style>
+</head>
+<body class="home-main">
+  <div class="demo-pad">
+    <p class="demo-note">※ 특정 고객 대상 ‘사전한도 안내’ 배너 — 기존 메인 추천상품 슬라이더(<code>.main-card-list</code>)에 <code>.swiper-slide</code>로 추가됩니다.</p>
+
+    <div class="main-sec-wrap">
+      <div class="main-sec swiper main-card-list">
+        <div class="swiper-wrapper">
+
+          <!-- ▼ 사전한도 안내 배너 (특정 고객에게만 노출) -->
+          <div class="swiper-slide" role="group" aria-label="1 / 2">
+            <div class="product-card type-limit-card">
+              <div class="txt-con type-limit">
+                <!-- 고객명: 백엔드 치환 -->
+                <p class="greet"><span class="ct-name">홍길동</span> 고객님</p>
+                <p class="limit-label" data-lang="">자동차담보대출 사전한도</p>
+                <!-- 사전한도금액: 백엔드 치환 (천단위 콤마) -->
+                <p class="limit-amount"><span class="num">3,000</span><span class="unit">만원</span></p>
+                <!-- 금리: 백엔드 치환 -->
+                <p class="limit-rate" data-lang="">금리 <strong>연 5.9%</strong></p>
+                <a href="javascript:void(0);" data-url="/fin/ret/JFINRET0003.do" data-type="Q" class="btn-link" data-lang="">대출신청</a>
+              </div>
+            </div>
+          </div>
+          <!-- ▲ 사전한도 안내 배너 -->
+
+          <!-- 동일 타입 / 다른 상품 예시 (슬라이드 확인용) -->
+          <div class="swiper-slide" role="group" aria-label="2 / 2">
+            <div class="product-card type-limit-card">
+              <div class="txt-con type-limit">
+                <p class="greet"><span class="ct-name">홍길동</span> 고객님</p>
+                <p class="limit-label">주택담보대출 사전한도</p>
+                <p class="limit-amount"><span class="num">25,000</span><span class="unit">만원</span></p>
+                <p class="limit-rate">금리 <strong>연 4.2%</strong></p>
+                <a href="javascript:void(0);" data-url="/fin/ret/JFINRET0003.do" data-type="Q" class="btn-link">대출신청</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+    </div>
+  </div>
+
+  <script src="../assets/js/jquery/jquery-3.6.1.min.js"></script>
+  <!-- 실서비스에서는 메인 페이지가 swiper를 이미 로드/초기화합니다. (미리보기용으로만 CDN 사용) -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script>
+    (function () {
+      if (!window.Swiper) return; // 미초기화 시 CSS 폴백으로 첫 배너만 표시
+      new Swiper('.main-card-list', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        loop: true,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+      });
+    })();
+  </script>
+</body>
+</html>
