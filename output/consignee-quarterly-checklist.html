@@ -213,9 +213,16 @@
         var item = e.target.closest('.check-item');
         item.classList.add('answered');
 
-        // 부적정일 때만 비고 입력 노출
+        // 부적정(아니오) 선택 시 팝업 안내 + 비고 입력 노출
         var note = item.querySelector('.item-note');
-        note.classList.toggle('show', e.target.value === '부적정');
+        var isBad = e.target.value === '부적정';
+        note.classList.toggle('show', isBad);
+
+        if (isBad) {
+          var num = item.getAttribute('data-idx');
+          alert(num + '번 항목이 \'부적정\'으로 선택되었습니다.\n미흡사항과 개선계획을 비고란에 입력해주세요.');
+          note.querySelector('textarea').focus();
+        }
 
         refresh();
       });
